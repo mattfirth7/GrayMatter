@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>Hi, {{ user.username }}!</h1>
+	{% for accuracy in accuracies %}
+	<div><p>{{ accuracy.model }}: <b>{{ accuracy.accuracy }}</b></p></div>
+	{% endfor %}
+{% endblock %}

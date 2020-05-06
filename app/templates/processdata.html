@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>Process Data</h1>
+	<form action="" enctype="multipart/form-data" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.datasheet.label }}<br>
+			{{ form.datasheet(size=32) }}<br>
+			{% for error in form.datasheet.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.datatype.label }}<br>
+			{{ form.datatype(size=32) }}<br>
+			{% for error in form.datatype.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>{{ form.submit }}</p>
+	</form>
+{% endblock %}
