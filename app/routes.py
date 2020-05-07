@@ -1,9 +1,9 @@
 import os
 from app import app
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, session
 from werkzeug.utils import secure_filename
 from app.forms import CsvForm, PredictForm
-from app.EasyAI import easy_ai
+from app.EasyAI import easy_ai, easy_ai_prediction
 
 @app.route('/')
 @app.route('/index')
@@ -35,7 +35,7 @@ def processdata():
         
         
         results_array = easy_ai.easyanalysis(csv_filename, form.datatype.data)
-        os.remove('C:/Users/Matt/Documents/graymatter-flask/assets/tempdata/'+csv_filename)
+        os.remove('C:/Users/Matt/Documents/graymatter-flask/assets/tempdata/' + csv_filename)
         flash('Model Selected: {}\nAccuracy: {}'.format(results_array[0],results_array[1]))
         
         return redirect(url_for('index'))
@@ -49,15 +49,16 @@ def predictdata():
         
         input_data = form.datasheet.data
         input_filename = secure_filename(input_data.filename)
-        
+        model_name = form.model_name.data
         input_data.save(os.path.join(assets_dir, 'tempdata', input_filename))
         
-        results_array = easy_ai.prediction(input_filename, model)
-        
+        results_array = easy_ai_prediction.prediction(input_filename, model_name)
+        session['results'] = results_array.tolist()
         os.remove('C:/Users/Matt/Documents/graymatter-flask/assets/tempdata/'+input_filename)
-        return redirect(url_for('results', results_arr=results_array))
-    return render_template()
+        return redirect(url_for('results'))
+    return render_template('predictdata.html', title='Predict Data', form=form)
 
-@app.route('/results')
+@app.route('/results', methods=['GET', 'POST'])
 def results():
-    return render_template("results.html", predicted_vals = request.args.get('results_arr'))
+    predicted_vals = session.get('results', None)
+    return render_template("results.html", predicted_vals = predicted_vals)

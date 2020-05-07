@@ -69,7 +69,7 @@ def easyanalysis(input_filename, datatype):
     label_type = datatype
     
     if label_type.lower() == "classification":
-        return easy_ai_classification.easy_classification(sk_learn_compatible_normed_x_train, y_train, sk_learn_compatible_normed_x_test, y_test)
+        return easy_ai_classification.easy_classification(input_filename, sk_learn_compatible_normed_x_train, y_train, sk_learn_compatible_normed_x_test, y_test)
     elif label_type.lower() == "regression":
-        return easy_ai_regression.easy_regression(sk_learn_compatible_normed_x_train, y_train, sk_learn_compatible_normed_x_test, y_test)
+        return easy_ai_regression.easy_regression(input_filename, sk_learn_compatible_normed_x_train, y_train, sk_learn_compatible_normed_x_test, y_test)
             

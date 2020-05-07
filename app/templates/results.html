@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>Predictions:</p><br>
+	{% for val in predicted_vals %}
+	<p>{{ val }}</p>
+	{% endfor %}
+{% endblock %}

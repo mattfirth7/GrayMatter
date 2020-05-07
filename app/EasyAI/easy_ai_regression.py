@@ -40,7 +40,7 @@ def least_angle_regr(x_train, y_train, x_test, y_test):
 
 def bayes_ridge_regr(x_train, y_train, x_test, y_test):
     rgr = linear_model.BayesianRidge()
-    return __fit_rgr_model('bayesian regr', rgr, x_train, y_train, x_test, y_test)
+    return __fit_rgr_model('bayesian_regr', rgr, x_train, y_train, x_test, y_test)
 
 def support_vector_regr(x_train, y_train, x_test, y_test):
     rgr = svm.SVR()
@@ -50,7 +50,7 @@ def huber_regr(x_train, y_train, x_test, y_test):
     rgr = linear_model.HuberRegressor()
     return __fit_rgr_model('huber', rgr, x_train, y_train, x_test, y_test)
 
-def easy_regression(x_train, y_train, x_test, y_test):
+def easy_regression(input_filename, x_train, y_train, x_test, y_test):
     functions = [ordinary_least_squares, ridge_regr, lasso_regr, 
                  least_angle_regr, bayes_ridge_regr, support_vector_regr,
                  huber_regr]
@@ -66,9 +66,9 @@ def easy_regression(x_train, y_train, x_test, y_test):
     regr_model = results_array[r2_argmax][0]
     model = results_array[r2_argmax][2]
 
-    OUTPUT = 'easyai_regression.pickle'
+    OUTPUT = input_filename[:-4] + '_' + regr_model + '_easyai_regression.pickle'
     
-    with open(OUTPUT, 'wb') as f:
+    with open('C:/Users/Matt/Documents/graymatter-flask/assets/models/' + OUTPUT, 'wb') as f:
         f.write(model)
         f.close()
     

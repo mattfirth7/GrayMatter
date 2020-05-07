@@ -39,7 +39,7 @@ def support_vector_machine(x_train, y_train, x_test, y_test):
     accuracy_arr = []
     for kernel in ('linear', 'rbf'):
         clf = svm.SVC(kernel = kernel, gamma = 2)
-        model_info = __fit_clf_model(kernel + ' svm', clf, x_train, y_train, x_test, y_test)
+        model_info = __fit_clf_model(kernel + '_svm', clf, x_train, y_train, x_test, y_test)
         model_arr.append(model_info)
         accuracy_arr.append(model_info[1])
         
@@ -77,7 +77,7 @@ def quadratic_discriminant(x_train, y_train, x_test, y_test):
 
 #Do I want to add something like rerunning classifiers with the highest accuracies
 #to get a better estimate of mean accuracy?
-def easy_classification(x_train, y_train, x_test, y_test):
+def easy_classification(input_filename, x_train, y_train, x_test, y_test):
     functions = [k_nearest, support_vector_machine, decision_tree_classifier, 
                  random_forest_classifier, adaboost_classifier, native_bayes]
     results_array = []
@@ -93,9 +93,9 @@ def easy_classification(x_train, y_train, x_test, y_test):
     classifier = results_array[accuracy_argmax][0]
     model = results_array[accuracy_argmax][2]
 
-    OUTPUT = 'easyai_classifier.pickle'
+    OUTPUT = input_filename[:-4] + '_' + classifier + '_easyai_classifier.pickle'
     
-    with open(OUTPUT, 'wb') as f:
+    with open('C:/Users/Matt/Documents/graymatter-flask/assets/models/' + OUTPUT, 'wb') as f:
         f.write(model)
         f.close()
     
