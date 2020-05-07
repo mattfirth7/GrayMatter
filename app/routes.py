@@ -43,7 +43,7 @@ def processdata():
 
 @app.route('/predictdata', methods=['GET', 'POST'])
 def predictdata():
-    form = PredictForm()
+    form = PredictForm.new()
     if form.validate_on_submit():
         assets_dir = os.path.join(os.path.dirname(app.instance_path), 'assets')
         

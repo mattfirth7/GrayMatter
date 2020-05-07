@@ -16,3 +16,15 @@ class PredictForm(FlaskForm):
         myChoices.append((model,model))
     model_name = SelectField('Select the Model', choices = myChoices, validators=[DataRequired()])
     submit = SubmitField('Predict')
+    
+    @classmethod
+    def new(cls):
+        form = cls()
+        
+        myModels = os.listdir('C:/Users/Matt/Documents/graymatter-flask/assets/models/')
+        myChoices = []
+        for model in myModels:
+            myChoices.append((model,model))
+        
+        form.model_name.choices = myChoices
+        return form
